@@ -69,3 +69,9 @@
     @apply rounded-xl border border-navy-100 bg-white shadow-card;
   }
 }
+
+.netlify-badge,
+iframe[src*="netlify"],
+[data-netlify-badge] {
+  display: none !important;
+}
