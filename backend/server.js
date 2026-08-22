@@ -33,16 +33,25 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // --- CORS ---
-// CLIENT_URL may contain a comma-separated list of allowed origins
-// (e.g. local dev + the deployed Netlify URL).
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
+// Consolidates process.env.CLIENT_URL, process.env.FRONTEND_URL, and deployment defaults
+const rawOrigins = [
+  process.env.CLIENT_URL,
+  process.env.FRONTEND_URL,
+  'https://educonnectgh.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+]
+  .filter(Boolean)
+  .join(',');
+
+const allowedOrigins = rawOrigins
   .split(',')
   .map((origin) => origin.trim());
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, curl, server-to-server, PWA in some contexts)
+      // Allow requests with no origin (mobile apps, curl, server-to-server, PWA contexts)
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
