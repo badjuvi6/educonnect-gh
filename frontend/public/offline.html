@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>You're offline - EduConnect GH</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f172e;
+        color: #eef1f8;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        padding: 24px;
+        text-align: center;
+      }
+      .card {
+        max-width: 420px;
+      }
+      .badge {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 24px;
+        border-radius: 16px;
+        background: #16223e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 22px;
+        color: #e4a93f;
+        letter-spacing: 0.5px;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0 0 12px;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #aebbdd;
+        margin: 0 0 24px;
+      }
+      button {
+        background: #e4a93f;
+        color: #16223e;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="badge">EC</div>
+      <h1>You're offline</h1>
+      <p>
+        EduConnect GH can't reach the server right now. Check your connection
+        and try again — pages you've already visited may still be available.
+      </p>
+      <button onclick="window.location.reload()">Try again</button>
+    </div>
+  </body>
+</html>
