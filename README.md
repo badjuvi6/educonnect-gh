@@ -1,172 +1,239 @@
-# EduConnect GH
+```markdown
+# EduConnect GH 🎓
 
 **Education Process & Academic Management Portal for Ghanaian tertiary institutions.**
 
-A production-ready full-stack web app (installable as a PWA) for tracking academic processes, course materials, fee status, and announcements. Built for two roles: **Students** and **Lecturers/Admins**.
+A production-ready full-stack web application (installable as a Progressive Web App / PWA) for tracking academic requests, course materials, fee billing statuses, and institutional announcements. Designed with strict role-based workflows for **Students**, **Lecturers**, and **Administrators**.
 
 ---
 
-## Stack
+## 🚀 Live Demos
 
-| Layer      | Tech                                                              |
-| ---------- | ------------------------------------------------------------------ |
-| Frontend   | React (Vite), Tailwind CSS, Lucide React, React Router             |
-| PWA        | Web App Manifest, custom Service Worker, iOS Safari meta tags      |
-| Backend    | Node.js, Express.js                                                 |
-| Database   | MongoDB + Mongoose                                                  |
-| Auth       | JWT (JSON Web Tokens), bcrypt password hashing                      |
-| Deployment | Netlify (frontend) + Render (backend) + MongoDB Atlas (database)    |
+* **Web App (PWA):** Deployed on [Netlify](https://smefinancehub.netlify.app/)
+* **Backend API:** Hosted on [Render](https://educonnect-gh.onrender.com)
+* **Database:** MongoDB Atlas
 
 ---
 
-## Project Structure
+## 🛠️ Tech Stack
 
-```
+| Layer | Technology |
+|---|---|
+| **Frontend** | React (Vite), Tailwind CSS, Lucide React, React Router |
+| **PWA Layer** | Web App Manifest, Custom Service Worker (`sw.js`), iOS Safari Meta Tags |
+| **Backend API** | Node.js, Express.js |
+| **Database** | MongoDB with Mongoose ORM |
+| **Auth & Security** | JWT (JSON Web Tokens), bcrypt password hashing, Express Rate Limit |
+| **Deployment** | Netlify (Frontend) + Render (Backend) + MongoDB Atlas (Database) |
+
+---
+
+## 📂 Project Structure
+
+```text
 educonnect-gh/
 ├── backend/
-│   ├── config/db.js                 # MongoDB connection
+│   ├── config/
+│   │   └── db.js                    # MongoDB connection configuration
 │   ├── models/                      # Mongoose schemas
-│   │   ├── User.js                  # students, lecturers, admins
-│   │   ├── Process.js               # academic process requests
-│   │   ├── Announcement.js          # broadcast notices
-│   │   ├── CourseMaterial.js        # lecturer-uploaded resources
-│   │   └── FeeStatus.js             # per-semester billing (GHS)
-│   ├── controllers/                 # business logic
-│   ├── routes/                      # express.Router() per resource
+│   │   ├── User.js                  # Students, Lecturers, Admins
+│   │   ├── Process.js               # Academic process requests
+│   │   ├── Announcement.js          # Broadcast notices
+│   │   ├── CourseMaterial.js        # Resource links & documents
+│   │   └── FeeStatus.js             # Per-semester billing (GHS)
+│   ├── controllers/                 # Route handler logic
+│   ├── routes/                      # Express routers per resource
 │   ├── middleware/
 │   │   ├── authMiddleware.js        # JWT verification (protect)
-│   │   ├── roleMiddleware.js        # role-based access (authorize)
-│   │   └── errorMiddleware.js       # centralized error handling
+│   │   ├── roleMiddleware.js        # Role-based authorization
+│   │   └── errorMiddleware.js       # Centralized error handler
 │   ├── utils/
-│   │   ├── generateToken.js
-│   │   └── seeder.js                # creates the first admin account
-│   ├── server.js                    # app entry point
+│   │   ├── generateToken.js         # JWT signing helper
+│   │   └── seeder.js                # Initial admin account seeder
+│   ├── .env.example
+│   ├── server.js                    # Express app entry point
 │   └── package.json
 │
 └── frontend/
     ├── public/
-    │   ├── manifest.json            # PWA manifest
-    │   ├── sw.js                    # service worker (offline support)
-    │   ├── offline.html             # offline fallback page
-    │   └── icons/                   # app icons (incl. maskable + apple-touch)
+    │   ├── _redirects               # SPA routing rule for Netlify
+    │   ├── manifest.json            # PWA Web App Manifest
+    │   ├── sw.js                    # Custom Service Worker (offline caching)
+    │   ├── offline.html             # Offline fallback page
+    │   └── icons/                   # App icons (maskable & apple-touch)
     ├── src/
-    │   ├── api/axios.js             # configured API client
-    │   ├── context/AuthContext.jsx  # persistent JWT auth state
+    │   ├── api/
+    │   │   └── axios.js             # Configured Axios API client
+    │   ├── context/
+    │   │   └── AuthContext.jsx      # Persistent Auth state
     │   ├── components/
     │   │   ├── layout/              # Navbar, Sidebar, DashboardLayout
     │   │   ├── auth/                # LoginForm, SignupForm
-    │   │   ├── student/             # StudentDashboard, FeeStatusCard, ...
-    │   │   ├── lecturer/            # LecturerDashboard, ManageStudents, ...
-    │   │   └── shared/              # AnnouncementsFeed, ProtectedRoute, ...
-    │   ├── pages/                   # route-level pages
-    │   ├── utils/constants.js
-    │   ├── App.jsx                  # route definitions
-    │   └── main.jsx                 # entry point + SW registration
-    ├── index.html                   # iOS PWA meta tags live here
-    └── package.json
+    │   │   ├── student/             # StudentDashboard, FeeStatusCard, etc.
+    │   │   ├── lecturer/            # LecturerDashboard, ManageStudents, etc.
+    │   │   └── shared/              # AnnouncementsFeed, ProtectedRoute, etc.
+    │   ├── pages/                   # Route-level view components
+    │   ├── utils/
+    │   │   └── constants.js         # Shared application constants
+    │   ├── App.jsx                  # React Router definitions
+    │   └── main.jsx                 # Entry point & SW registration
+    ├── index.html                   # HTML shell with iOS PWA meta tags
+    ├── package.json
+    ├── tailwind.config.js
+    └── vite.config.js
+
 ```
 
 ---
 
-## Local Setup
+## ⚡ Getting Started Locally
 
-### 1. Backend
+### Prerequisites
+
+* **Node.js** (v18 or higher)
+* **MongoDB** instance — local (`127.0.0.1:27017`) or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster.
+
+---
+
+### 1. Backend Setup
 
 ```bash
 cd backend
 cp .env.example .env
-# Edit .env: set MONGO_URI (MongoDB Atlas connection string) and JWT_SECRET
 npm install
-npm run dev          # starts on http://localhost:5000
+
 ```
 
-Create the first admin account (needed to log in as staff and create lecturer accounts):
+Configure `.env`:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRES_IN=30d
+CLIENT_URL=http://localhost:5173
+
+```
+
+Seed the initial admin account:
 
 ```bash
-# Optionally set SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD env vars first
 npm run seed
+
 ```
 
-> **Note on roles:** `POST /api/auth/register` is intentionally **student-only** — anyone who signs up publicly becomes a student. Lecturer and admin accounts can only be created by an existing admin via `POST /api/users`, or by the seeder script above. This prevents a public signup form from being used to self-grant staff access.
+Start the API in development mode:
 
-### 2. Frontend
+```bash
+npm run dev
+
+```
+
+> 🔒 **Role Guard Rule:** Public registration (`POST /api/auth/register`) is **student-only** by design. Lecturer and Admin accounts can only be provisioned by an existing Admin via `POST /api/users` or via the initial seed script (`npm run seed`).
+
+---
+
+### 2. Frontend Setup
+
+In a new terminal:
 
 ```bash
 cd frontend
 cp .env.example .env
-# Edit .env: set VITE_API_URL=http://localhost:5000/api
 npm install
-npm run dev           # starts on http://localhost:5173
+
 ```
 
----
+Configure `.env`:
 
-## API Overview
+```env
+VITE_API_URL=http://localhost:5000/api
 
-All routes are prefixed with `/api`. Protected routes require `Authorization: Bearer <token>`.
+```
 
-| Method | Route                                | Access            | Description                          |
-| ------ | ------------------------------------- | ------------------ | ------------------------------------- |
-| POST   | `/auth/register`                      | Public              | Student self-registration             |
-| POST   | `/auth/login`                         | Public              | Login (any role)                      |
-| GET    | `/auth/me`                            | Private             | Current user profile                  |
-| POST   | `/process`                            | Student             | Submit a process request              |
-| GET    | `/process`                            | Private             | List requests (own, or all for staff) |
-| PUT    | `/process/:id`                        | Lecturer/Admin      | Approve / reject / update remarks     |
-| GET    | `/process/dashboard-summary`          | Student             | Dashboard summary (counts + fees)     |
-| POST   | `/announcements`                      | Lecturer/Admin      | Broadcast a notice                    |
-| GET    | `/announcements`                      | Private             | List announcements                    |
-| POST   | `/materials`                          | Lecturer/Admin      | Add a course resource (link-based)    |
-| GET    | `/materials`                          | Private             | List/filter course materials          |
-| GET    | `/users`                              | Lecturer/Admin      | List/search student & staff records   |
-| POST   | `/users`                              | Admin               | Create a lecturer/admin account       |
-| PUT    | `/users/:id`                          | Admin               | Update a user record                  |
-| POST   | `/users/:id/fees`                     | Admin               | Set/update a fee bill for a student   |
-| POST   | `/users/:id/fees/:feeId/payments`     | Admin               | Record a payment                      |
+Start the Vite dev server:
+
+```bash
+npm run dev
+
+```
+
+Open `http://localhost:5173` in your browser.
 
 ---
 
-## Deployment
+## 📡 API Reference
 
-### Backend → Render
+All endpoints are prefixed with `/api`. Protected routes require an `Authorization: Bearer <token>` header.
 
-1. Push `backend/` to a GitHub repo (or the whole monorepo, setting Render's **Root Directory** to `backend`).
-2. Create a new **Web Service** on Render, connect the repo.
-3. Build command: `npm install` · Start command: `npm start`.
-4. Add environment variables from `.env.example` (`MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CLIENT_URL` — set this to your Netlify URL once you have it, comma-separated if you need more than one origin).
-5. Deploy. Note the resulting URL, e.g. `https://educonnect-gh-api.onrender.com`.
-6. Run the seeder once via Render's Shell tab: `npm run seed`.
+| Method | Route | Access | Description |
+| --- | --- | --- | --- |
+| POST | `/auth/register` | Public | Student self-registration |
+| POST | `/auth/login` | Public | Authenticate user (any role) & receive JWT |
+| GET | `/auth/me` | Private | Fetch active user profile |
+| POST | `/process` | Student | Submit an academic process request |
+| GET | `/process` | Private | List requests (own for students, all for staff) |
+| PUT | `/process/:id` | Lecturer/Admin | Approve, reject, or add remarks to a request |
+| GET | `/process/dashboard-summary` | Student | Fetch student summary metrics & fee status |
+| POST | `/announcements` | Lecturer/Admin | Broadcast an institutional announcement |
+| GET | `/announcements` | Private | List active announcements |
+| POST | `/materials` | Lecturer/Admin | Upload/link a course learning resource |
+| GET | `/materials` | Private | List & filter course materials |
+| GET | `/users` | Lecturer/Admin | List/search student & staff directory |
+| POST | `/users` | Admin | Create a Lecturer or Admin account |
+| PUT | `/users/:id` | Admin | Update user record details |
+| POST | `/users/:id/fees` | Admin | Issue/update fee bill for a student |
+| POST | `/users/:id/fees/:feeId/payments` | Admin | Record a payment towards a fee bill |
 
-### Frontend → Netlify
+---
 
-1. Push `frontend/` to a repo (or set **Base directory** to `frontend` in a monorepo).
+## 🌐 Deployment Instructions
+
+### Backend (Render)
+
+1. Set the **Root Directory** to `backend`.
+2. Build command: `npm install` · Start command: `npm start`.
+3. Set environment variables: `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, and `CLIENT_URL` (your deployed Netlify frontend URL).
+4. Run the admin seeder script via Render Shell: `npm run seed`.
+
+### Frontend (Netlify)
+
+1. Set the **Base directory** to `frontend`.
 2. Build command: `npm run build` · Publish directory: `dist`.
-3. Add environment variable `VITE_API_URL` = `https://<your-render-service>.onrender.com/api`.
-4. Add a `_redirects` file behavior for SPA routing — Netlify needs all paths to fall back to `index.html`. Create `frontend/public/_redirects` containing:
-   ```
-   /*  /index.html  200
-   ```
-5. Deploy. Once you have the Netlify URL, go back to Render and update `CLIENT_URL` to match (exact origin, no trailing slash), then redeploy the backend so CORS allows it.
-
-### MongoDB Atlas
-
-1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
-2. Create a database user and allow network access from `0.0.0.0/0` (or Render's static IPs if you upgrade).
-3. Copy the connection string into `MONGO_URI`.
+3. Set environment variable: `VITE_API_URL` = `https://<your-render-api>.onrender.com/api`.
+4. Ensure `public/_redirects` exists with `/*  /index.html  200` to handle SPA page refreshes.
 
 ---
 
-## PWA Notes
+## 📱 Progressive Web App (PWA) Features
 
-- **iOS Safari:** Uses `apple-mobile-web-app-capable`, `apple-touch-icon`, and status bar meta tags in `index.html`. On iOS, users install via Share → "Add to Home Screen" (iOS does not support the `beforeinstallprompt` auto-prompt).
-- **Desktop Chrome / Android:** `manifest.json` + service worker satisfy installability criteria; Chrome will offer an install icon in the address bar automatically.
-- **Offline:** `sw.js` pre-caches the app shell, uses network-first for page navigations (falling back to the cached shell or `offline.html`), cache-first for static assets, and network-only for `/api/*` calls (with a graceful offline JSON response rather than stale data).
+* **iOS Safari Integration:** Configured with `apple-mobile-web-app-capable`, status bar style meta tags, and `apple-touch-icon` links in `index.html`.
+* **Android & Desktop Chrome:** `manifest.json` provides standard installation metadata and triggers address bar install prompts.
+* **Service Worker Caching (`sw.js`):**
+* **App Shell & Assets:** Pre-cached for quick load times and cache-first static delivery.
+* **Navigation Requests:** Network-first fallback to cached shell or custom `offline.html`.
+* **API Requests:** Network-only handling with a JSON offline response to avoid rendering stale database data.
+
+
 
 ---
 
-## Security Notes for Production
+## 🔐 Production Security Measures
 
-- Change the seeded admin password immediately after first login.
-- Rotate `JWT_SECRET` to a long, random value before going live.
-- `CLIENT_URL` should list only real, trusted origins — the CORS middleware rejects anything not on that list.
-- Rate limiting is enabled globally (`/api/*`) and more strictly on `/api/auth/login` and `/api/auth/register`.
+* Change the default seeded admin password immediately after first login.
+* Use a long, cryptographically secure string for `JWT_SECRET`.
+* Enforce `CLIENT_URL` CORS settings to whitelist only trusted frontend origins.
+* Rate limiting is configured globally on `/api/*` with elevated protection on authentication routes.
+
+---
+
+## 👤 Author
+
+**Winfred Manu**
+
+* **GitHub:** [@badjuvi6](https://www.google.com/search?q=https://github.com/badjuvi6)
+* **Institution:** Ghana Communication Technology University (GCTU)
+
+```
+
+```
